@@ -8,9 +8,9 @@ using System.Threading;
 
 namespace AZH_Tankai_Server.Hubs
 {
-    public class ControlHub : Hub
+    public class PlayerHub : Hub
     {
-        Storage lobby = Storage.Get();
+        readonly PlayerStorage playerStorage = PlayerStorage.Get();
         public Task SendCoordinate(string user, int x, int y)
         {
             return Clients.All.SendAsync("ReceiveCoordinate", user, x, y);
@@ -19,9 +19,9 @@ namespace AZH_Tankai_Server.Hubs
         public Task SendPlayer(string user, string connectionId)
         {
 
-            if (lobby.GetByUsername(user) == null)
+            if (playerStorage.GetByUsername(user) == null)
             {
-                lobby.Add(new Player(user, connectionId));
+                playerStorage.Add(new Player(user, connectionId));
                 return Clients.All.SendAsync("ReceiveUser", user);
 
             }
@@ -34,8 +34,8 @@ namespace AZH_Tankai_Server.Hubs
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            Player player = lobby.GetByConnectionId(base.Context.ConnectionId);
-            lobby.Remove(base.Context.ConnectionId);
+            Player player = playerStorage.GetByConnectionId(base.Context.ConnectionId);
+            playerStorage.Remove(base.Context.ConnectionId);
             Clients.All.SendAsync("TerminatePlayer", player.Name);
             return base.OnDisconnectedAsync(exception);
         }
