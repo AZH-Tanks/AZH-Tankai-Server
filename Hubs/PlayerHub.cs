@@ -30,13 +30,15 @@ namespace AZH_Tankai_Server.Hubs
                 return Clients.Caller.SendAsync("PlayerExists", user);
             }
         }
-    
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
             Player player = playerStorage.GetByConnectionId(base.Context.ConnectionId);
             playerStorage.Remove(base.Context.ConnectionId);
-            Clients.All.SendAsync("TerminatePlayer", player.Name);
+            if (player != null)
+            {
+                Clients.All.SendAsync("TerminatePlayer", player.Name);
+            }
             return base.OnDisconnectedAsync(exception);
         }
 
