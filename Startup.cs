@@ -1,9 +1,12 @@
-﻿using AZH_Tankai_Server.Hubs;
+﻿using AZH_Tankai_Server.Controllers;
+using AZH_Tankai_Server.Hubs;
+using AZH_Tankai_Server.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json;
 
 namespace AZH_Tankai_Server
 {
@@ -36,7 +39,9 @@ namespace AZH_Tankai_Server
             });
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello world");
+                MazeGenerator mazeGenerator = new MazeGenerator();
+                Maze maze = mazeGenerator.GenerateMaze();
+                await context.Response.WriteAsync(JsonSerializer.Serialize(maze.GetMazeDTO()));
             });
         }
     }

@@ -1,5 +1,4 @@
 ﻿using AZH_Tankai_Server.Controllers.Maze;
-using AZH_Tankai_Server.Models;
 using System;
 
 namespace AZH_Tankai_Server.Controllers
@@ -17,9 +16,9 @@ namespace AZH_Tankai_Server.Controllers
 
         public Models.Maze GenerateMaze()
         {
-            int width = rng.Next(30, 50);
-            int height = rng.Next(30, 50);
-            return mazeBuilder.Reset().AddTiles(height, width).Create();
+            int width = rng.Next(15, 20);
+            int height = rng.Next(15, 20);
+            return mazeBuilder.Reset().SetDimensions(height, width).AddTiles().AddWalls().Create();
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using AZH_Tankai_Server.Models;
+﻿using AZH_Tankai_Server.Controllers.Maze.MazeWallGenerationAlgorithms;
+using AZH_Tankai_Server.Controllers.Maze.MazeWallGenerationAlgorithms.DFS;
+using AZH_Tankai_Server.Models;
+using AZH_Tankai_Shared;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +13,9 @@ namespace AZH_Tankai_Server.Controllers.Maze
         private const double StickyTileChance = 0.1;
         private const double SandMazeChance = 0.3;
         private List<List<Tile>> tiles;
+        private List<List<Wall>> walls;
+        private int height = 10;
+        private int width = 10;
         private readonly Random rng;
         private readonly AbstractTileFactory tileFactory;
         public EasyMazeBuilder()
@@ -25,7 +31,14 @@ namespace AZH_Tankai_Server.Controllers.Maze
             }
         }
 
-        public IMazeBuilder AddTiles(int height, int width)
+        public IMazeBuilder SetDimensions(int height, int width)
+        {
+            this.height = height;
+            this.width = width;
+            return this;
+        }
+
+        public IMazeBuilder AddTiles()
         {
             if (tiles == null)
             {
@@ -55,14 +68,34 @@ namespace AZH_Tankai_Server.Controllers.Maze
             return this;
         }
 
+        public IMazeBuilder AddWalls()
+        {
+            IWallGenerator wallGenerator = new WallGenerator(width, height);
+            List<List<TileWallsState>> mazeWallStates = wallGenerator.GenerateWalls();
+            walls = new List<List<Wall>>();
+            foreach (List<TileWallsState> wallStateRow in mazeWallStates)
+            {
+                List<Wall> wallRow = new List<Wall>();
+                foreach (TileWallsState wallState in wallStateRow)
+                {
+                    wallRow.Add(new Wall(wallState, true));
+                }
+                walls.Add(wallRow);
+            }
+            return this;
+        }
+
         public Models.Maze Create()
         {
-            return new Models.Maze(tiles);
+            return new Models.Maze(tiles, walls, width, height);
         }
 
         public IMazeBuilder Reset()
         {
             tiles = null;
+            walls = null;
+            width = 10;
+            height = 10;
             return this;
         }
     }

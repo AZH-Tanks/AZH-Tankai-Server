@@ -2,9 +2,10 @@
 {
     public interface IMazeBuilder
     {
-        public IMazeBuilder AddTiles(int height, int width);
+        public IMazeBuilder SetDimensions(int height, int width);
+        public IMazeBuilder AddWalls();
+        public IMazeBuilder AddTiles();
         public Models.Maze Create();
-
         public IMazeBuilder Reset();
     }
 }
