@@ -14,7 +14,7 @@ namespace AZH_Tankai_Server.Models
             return TileType.StickyTile;
         }
 
-        public override double GetTileSpeedModifier(double currentSpeed = 0)
+        public override double GetTileSpeedModifier(double currentSpeed)
         {
             return 0.5;
         }

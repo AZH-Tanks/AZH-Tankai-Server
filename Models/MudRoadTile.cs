@@ -9,14 +9,13 @@ namespace AZH_Tankai_Server.Models
         private const double ChanceToGetStuck = 0.1;
         private const double ChanceToBreakFree = 0.8;
         private readonly Random rng;
-        private readonly Timer timer;
         private bool isStuck;
 
         public MudRoadTile(Point location) : base(location)
         {
             isStuck = false;
             rng = new Random();
-            timer = new Timer(500);
+            Timer timer = new Timer(500);
             timer.Elapsed += OnTick;
             timer.Enabled = true;
         }
@@ -26,7 +25,7 @@ namespace AZH_Tankai_Server.Models
             return TileType.MudRoadTile;
         }
 
-        public override double GetTileSpeedModifier(double currentSpeed = 0)
+        public override double GetTileSpeedModifier(double currentSpeed)
         {
             double baseModifier = base.GetTileSpeedModifier(currentSpeed);
             return isStuck ? 0 : baseModifier;

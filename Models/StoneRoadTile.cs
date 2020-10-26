@@ -16,7 +16,7 @@ namespace AZH_Tankai_Server.Models
             return TileType.StoneRoadTile;
         }
 
-        public override double GetTileSpeedModifier(double currentSpeed = 0)
+        public override double GetTileSpeedModifier(double currentSpeed)
         {
             double baseModifier = base.GetTileSpeedModifier(currentSpeed);
             return baseModifier + (rng.NextDouble() - 0.5);

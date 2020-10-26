@@ -16,7 +16,7 @@ namespace AZH_Tankai_Server.Models
             return TileType.SandstoneTile;
         }
 
-        public override double GetTileSpeedModifier(double currentSpeed = 0)
+        public override double GetTileSpeedModifier(double currentSpeed)
         {
             double baseModifier = base.GetTileSpeedModifier(currentSpeed);
             return baseModifier + sandCoverage * 0.01;

@@ -20,7 +20,7 @@ namespace AZH_Tankai_Server.Models
             return TileType.PavedRoadTile;
         }
 
-        public override double GetTileSpeedModifier(double currentSpeed = 0)
+        public override double GetTileSpeedModifier(double currentSpeed)
         {
             double baseModifier = base.GetTileSpeedModifier(currentSpeed);
             return baseModifier - (hasPothole ? 0.3 : 0);

@@ -30,9 +30,14 @@ namespace AZH_Tankai_Server.Controllers.Maze.MazeWallGenerationAlgorithms.DFS
         }
     }
 
-    public struct RemoveWallAction
+    public struct RemoveWallAction : IEquatable<RemoveWallAction>
     {
-        public Point Neighbour;
-        public TileWallsState Wall;
+        public Point Neighbour { get; set; }
+        public TileWallsState Wall { get; set; }
+
+        public bool Equals(RemoveWallAction other)
+        {
+            return Neighbour.Equals(other.Neighbour) && Wall == other.Wall;
+        }
     }
 }

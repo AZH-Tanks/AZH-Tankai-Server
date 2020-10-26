@@ -5,7 +5,7 @@ namespace AZH_Tankai_Server.Models
     public abstract class Tile
     {
         public Point Location { get; set; }
-        public abstract double GetTileSpeedModifier(double currentSpeed = 0);
+        public abstract double GetTileSpeedModifier(double currentSpeed);
 
         public abstract TileType GetTileType();
 

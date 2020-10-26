@@ -7,7 +7,7 @@ namespace AZH_Tankai_Server.Models
     {
         private readonly Timer sinkTimer;
         private double sinkAmount;
-        private double entitiesOnBoard;
+        private int entitiesOnBoard;
         private readonly object syncLock = new object();
 
         public QuicksandTile(Point location) : base(location)
@@ -24,7 +24,7 @@ namespace AZH_Tankai_Server.Models
             return TileType.QuicksandTile;
         }
 
-        public override double GetTileSpeedModifier(double currentSpeed = 0)
+        public override double GetTileSpeedModifier(double currentSpeed)
         {
             double baseModifier = base.GetTileSpeedModifier(currentSpeed);
             return baseModifier - sinkAmount * 0.01;
