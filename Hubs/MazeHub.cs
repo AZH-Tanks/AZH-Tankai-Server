@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AZH_Tankai_Server.Hubs
 {
-    public partial class ControlHub
+    public partial class ControlHub : Hub
     {
         private readonly MazeGenerator mazeGenerator = new MazeGenerator();
 
