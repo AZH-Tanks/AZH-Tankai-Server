@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AZH_Tankai_Server.Hubs;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AZH_Tankai_Server.Hubs;
-using Microsoft.AspNetCore.Http;
 
 namespace AZH_Tankai_Server
 {
@@ -25,24 +18,25 @@ namespace AZH_Tankai_Server
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
-            });       
+            });
             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSignalR(routes =>
+            app.UseRouting();
+            app.UseEndpoints(routes =>
             {
-                routes.MapHub<PlayerHub>("/ControlHub");
+                routes.MapHub<ControlHub>("/ControlHub");
             });
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Privet mira!");
+                await context.Response.WriteAsync("Hello world");
             });
         }
     }
