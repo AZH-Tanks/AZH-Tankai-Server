@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace AZH_Tankai_Server.Hubs
 {
-    // Codacy does not recognize this is correctly marked as partial for some reason.
-    public partial class ControlHub : Hub //NOSONAR
+    public partial class ControlHub : Hub
     {
         readonly PlayerStorage playerStorage = PlayerStorage.Get();
         public Task SendCoordinate(string user, int x, int y)
