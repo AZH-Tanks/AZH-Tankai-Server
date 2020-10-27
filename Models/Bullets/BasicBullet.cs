@@ -4,7 +4,8 @@ using System.Text;
 
 namespace AZH_Tankai_Server.Models.Bullets
 {
-    class BasicBullet
+    class BasicBullet : Bullet
     {
+
     }
 }
