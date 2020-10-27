@@ -4,8 +4,8 @@ using System.Text;
 
 namespace AZH_Tankai_Server.Models.Bullets
 {
-    class BulletFactory
+    interface BulletFactory
     {
-        // TODO
+        public Bullet createBullet();
     }
 }
