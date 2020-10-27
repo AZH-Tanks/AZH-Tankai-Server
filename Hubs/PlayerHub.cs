@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AZH_Tankai_Server.Models;
 using System.Threading;
+using AZH_Tankai_Server.Models.Bullets;
 
 namespace AZH_Tankai_Server.Hubs
 {
@@ -31,10 +32,10 @@ namespace AZH_Tankai_Server.Hubs
             }
         }
 
-        public Task SendFireBullet(string user, int x, int y)
+        public Task SendFireBullet(string user, string type, int x, int y)
         {
-
-            return Clients.All.SendAsync("ReceiveBulletCoordinate", user, x, y);
+            Bullet bullet = new BulletFactory().createBullet(type);
+            return Clients.All.SendAsync("ReceiveBulletCoordinate", user, type, x, y);
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
