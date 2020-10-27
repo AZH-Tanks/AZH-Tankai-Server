@@ -31,6 +31,12 @@ namespace AZH_Tankai_Server.Hubs
             }
         }
 
+        public Task SendFireBullet(string user, int x, int y)
+        {
+
+            return Clients.All.SendAsync("ReceiveBulletCoordinate", user, x, y);
+        }
+
         public override Task OnDisconnectedAsync(Exception exception)
         {
             Player player = playerStorage.GetByConnectionId(base.Context.ConnectionId);
