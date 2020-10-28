@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using AZH_Tankai_Server.Models;
+using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AZH_Tankai_Server.Models;
 using System.Threading;
@@ -9,7 +8,7 @@ using AZH_Tankai_Server.Models.Bullets;
 
 namespace AZH_Tankai_Server.Hubs
 {
-    public class PlayerHub : Hub
+    public partial class ControlHub : Hub
     {
         readonly PlayerStorage playerStorage = PlayerStorage.Get();
         public Task SendCoordinate(string user, int x, int y)
