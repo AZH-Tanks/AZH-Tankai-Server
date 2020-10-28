@@ -35,7 +35,12 @@ namespace AZH_Tankai_Server.Hubs
         public Task SendFireBullet(string user, string type, int x, int y)
         {
             Bullet bullet = new BulletFactory().createBullet(type);
-            return Clients.All.SendAsync("ReceiveBulletCoordinate", user, type, x, y);
+            return bullet switch
+            {
+                Laser _ => Clients.All.SendAsync("ReceiveLaserCoordinate", user, x, y),
+                Shrapnel _ => Clients.All.SendAsync("ReceiveShrapnelCoordinate", user, x, y),
+                _ => Clients.All.SendAsync("ReceiveBasicBulletCoordinate", user, x, y),
+            };
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
