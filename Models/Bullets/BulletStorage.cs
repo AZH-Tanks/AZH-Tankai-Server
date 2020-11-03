@@ -28,7 +28,10 @@ namespace AZH_Tankai_Server.Models.Bullets
         }
         private void OnTick(object source, ElapsedEventArgs e)
         {
-            if (bullets.Count() == 0) return;
+            if (bullets.Count() == 0)
+            {
+                return;
+            }
             hubContext.Clients.All.SendAsync("ReceiveBulletCoordinates", JsonSerializer.Serialize(bullets)).GetAwaiter().GetResult();
             bullets.ForEach(bullet => bullet.Location = new Point(bullet.Location.X + bullet.Velocity, bullet.Location.Y));
         }
