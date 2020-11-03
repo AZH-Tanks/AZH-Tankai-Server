@@ -29,6 +29,10 @@ namespace AZH_Tankai_Server.Controllers.Maze
             {
                 tileFactory = new CityTileFactory();
             }
+            tiles = null;
+            walls = null;
+            width = 10;
+            height = 10;
         }
 
         public IMazeBuilder SetDimensions(int height, int width)
@@ -68,9 +72,8 @@ namespace AZH_Tankai_Server.Controllers.Maze
             return this;
         }
 
-        public IMazeBuilder AddWalls()
+        public IMazeBuilder AddWalls(IWallGenerator wallGenerator)
         {
-            IWallGenerator wallGenerator = new WallGenerator(width, height);
             List<List<TileWallsState>> mazeWallStates = wallGenerator.GenerateWalls();
             walls = new List<List<Wall>>();
             foreach (List<TileWallsState> wallStateRow in mazeWallStates)
