@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Timers;
 
 namespace AZH_Tankai_Server.Models.Bullets
@@ -11,7 +13,7 @@ namespace AZH_Tankai_Server.Models.Bullets
     {
         private IHubContext<ControlHub> hubContext;
         static object thisLock = new object();
-      
+
         private BulletStorage()
         {
             bullets = new List<Bullet>();
@@ -26,7 +28,9 @@ namespace AZH_Tankai_Server.Models.Bullets
         }
         private void OnTick(object source, ElapsedEventArgs e)
         {
-            hubContext.Clients.All.SendAsync("testing", "thing").GetAwaiter().GetResult();
+            if (bullets.Count() == 0) return;
+            hubContext.Clients.All.SendAsync("ReceiveBulletCoordinates", JsonSerializer.Serialize(bullets)).GetAwaiter().GetResult();
+            bullets.ForEach(bullet => bullet.Location = new Point(bullet.Location.X + bullet.Velocity, bullet.Location.Y));
         }
 
         private static BulletStorage singleton;
