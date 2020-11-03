@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore;
+﻿using AZH_Tankai_Server.Hubs;
+using AZH_Tankai_Server.Models.Bullets;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 
 namespace AZH_Tankai_Server
 {
@@ -7,7 +10,10 @@ namespace AZH_Tankai_Server
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args).Build();
+            var hubContext = host.Services.GetService(typeof(IHubContext<ControlHub>));
+            BulletStorage.Get().Start((IHubContext<ControlHub>)hubContext);
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
