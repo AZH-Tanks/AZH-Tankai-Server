@@ -9,8 +9,9 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
     {
         public Models.PowerUp GeneratePowerUp(Point point)
         {
-            // TODO: randomize power up
-            Models.PowerUp powerUp = new Models.PowerUp(PowerUpType.Camo, point);
+            Array powerUps = Enum.GetValues(typeof(PowerUpType));
+            Random rnd = new Random();
+            Models.PowerUp powerUp = new Models.PowerUp((PowerUpType)powerUps.GetValue(rnd.Next(powerUps.Length)), point);
             return powerUp;
         }
     }

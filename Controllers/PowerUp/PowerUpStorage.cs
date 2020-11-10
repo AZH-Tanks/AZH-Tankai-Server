@@ -21,22 +21,20 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
 
         public static void StartGeneration()
         {
+            _generationInterval = 5000;
             Random rnd = new Random();
             switch (rnd.Next(4))
             {
                 case 0:
                     _powerUpGenerator.SetAlgorithm(new PreferStrongPowerUps());
-                    _generationInterval = 6000;
                     _hubContext.Clients.All.SendAsync("PowerUpStrategy", "PreferStrongPowerUps");
                     break;
                 case 1:
                     _powerUpGenerator.SetAlgorithm(new PreferWeakPowerUps());
-                    _generationInterval = 6000;
                     _hubContext.Clients.All.SendAsync("PowerUpStrategy", "PreferWeakPowerUps");
                     break;
                 case 2:
                     _powerUpGenerator.SetAlgorithm(new ProgressiveGeneration());
-                    _generationInterval = 6000;
                     _hubContext.Clients.All.SendAsync("PowerUpStrategy", "ProgressiveGeneration");
                     break;
                 case 3:
@@ -46,7 +44,6 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
                     break;
                 default:
                     _powerUpGenerator.SetAlgorithm(new PreferWeakPowerUps());
-                    _generationInterval = 6000;
                     _hubContext.Clients.All.SendAsync("PowerUpStrategy", "PreferWeakPowerUps");
                     break;
             }
