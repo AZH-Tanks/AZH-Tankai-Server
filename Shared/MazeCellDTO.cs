@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AZH_Tankai_Server.Controllers.Maze;
+using System;
 
 namespace AZH_Tankai_Shared
 {

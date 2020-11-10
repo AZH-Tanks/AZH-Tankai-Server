@@ -1,6 +1,7 @@
 using System;
 using AZH_Tankai_Shared;
 using AZH_Tankai_Server.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace AZH_Tankai_Server.Controllers.PowerUp
 {
