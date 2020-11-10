@@ -9,8 +9,6 @@ namespace AZH_Tankai_Server.Hubs
 {
     public partial class ControlHub : Hub
     {
-
-        // TODO: add Timer to generate multiple power ups
         public Task GeneratePowerUps()
         {
             PowerUpStorage.StartGeneration();

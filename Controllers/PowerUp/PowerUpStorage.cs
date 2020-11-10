@@ -64,6 +64,15 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
             {
                 _generationTimer.Dispose();
             }
+            _powerUpGenerator.StopAlgorithmStopwatch();
+        }
+
+        public static void ReduceTimerInterval(int milliseconds)
+        {
+            if (_generationTimer.Interval - milliseconds > 1)
+            {
+                _generationTimer.Interval -= milliseconds;
+            }
         }
     }
 }

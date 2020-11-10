@@ -7,19 +7,11 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
 {
     public class PreferStrongPowerUps : IGenerationAlgorithm
     {
-        private readonly List<PowerUpType> strongPowerUps = new List<PowerUpType>()
-        {
-            PowerUpType.HomingMissile,
-            PowerUpType.ExplodingBullet,
-            PowerUpType.Laser,
-            PowerUpType.Machinegun
-        };
-
         public Models.PowerUp GeneratePowerUp(Point point)
         {
             Random rnd = new Random();
-            int randomPowerUp = rnd.Next(strongPowerUps.Count);
-            Models.PowerUp powerUp = new Models.PowerUp(strongPowerUps[randomPowerUp], point);
+            int randomPowerUp = rnd.Next(PowerUpGenerator.strongPowerUps.Count);
+            Models.PowerUp powerUp = new Models.PowerUp(PowerUpGenerator.strongPowerUps[randomPowerUp], point);
             return powerUp;
         }
     }
