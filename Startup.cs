@@ -38,7 +38,8 @@ namespace AZH_Tankai_Server
             }
             app.UseSignalR(routes =>
             {
-                routes.MapHub<PlayerHub>("/ControlHub");
+                routes.MapHub<PlayerHub>("/PlayerHub");
+                routes.MapHub<GameHub>("/GameHub");
             });
             app.Run(async (context) =>
             {

@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AZH_Tankai_Server.Models;
-using System.Threading;
 
 namespace AZH_Tankai_Server.Hubs
 {
@@ -34,6 +31,7 @@ namespace AZH_Tankai_Server.Hubs
         public override Task OnDisconnectedAsync(Exception exception)
         {
             Player player = playerStorage.GetByConnectionId(base.Context.ConnectionId);
+
             playerStorage.Remove(base.Context.ConnectionId);
             if (player != null)
             {
