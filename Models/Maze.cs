@@ -8,6 +8,8 @@ namespace AZH_Tankai_Server.Models
         public List<List<Tile>> Tiles { get; set; }
         public List<List<Wall>> Walls { get; set; }
 
+        public List<PowerUp> PowerUps { get; set; }
+
         public int Width { get; set; }
         public int Height { get; set; }
 
@@ -49,6 +51,16 @@ namespace AZH_Tankai_Server.Models
                 mazeDTO.Add(mazeDTORow);
             }
             return mazeDTO;
+        }
+
+        public void AddPowerUp(PowerUp powerUp)
+        {
+            PowerUps.Add(powerUp);
+        }
+
+        public void RemovePowerUp(PowerUp powerUp)
+        {
+            PowerUps.Remove(powerUp);
         }
     }
 }
