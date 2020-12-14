@@ -32,7 +32,7 @@ namespace AZH_Tankai_Server.Models.Bullets
             {
                 return;
             }
-            hubContext.Clients.All.SendAsync("ReceiveBulletCoordinates", JsonSerializer.Serialize(bullets)).GetAwaiter().GetResult();
+            hubContext.Clients.All.SendAsync("ReceiveBulletCoordinates", JsonSerializer.Serialize(bullets.Select(bullet => bullet.GetBulletDTO()))).GetAwaiter().GetResult();
             bullets.ForEach(bullet => bullet.Location = new Point(bullet.Location.X + bullet.Velocity, bullet.Location.Y));
         }
 
