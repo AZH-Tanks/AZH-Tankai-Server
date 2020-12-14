@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AZH_Tankai_Server.Hubs
 {
-    public class GameHub : Hub
+    public partial class ControlHub : Hub
     {
         readonly GameStorage gameRooms = GameStorage.Get();
         readonly PlayerStorage players = PlayerStorage.Get();
@@ -69,7 +69,7 @@ namespace AZH_Tankai_Server.Hubs
         {
             Player player = players.GetByUsername(user);
             GameRoom gameRoom = gameRooms.GetByConnectionCode(roomId);
-          
+
 
             ISendContent sendTextCommand = new SendText(gameRoom.GetChat());
             player.Undo(sendTextCommand, user);

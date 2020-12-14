@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
-using AZH_Tankai_Server.Models;
-using System.Threading;
 
 namespace AZH_Tankai_Server.Hubs
 {
