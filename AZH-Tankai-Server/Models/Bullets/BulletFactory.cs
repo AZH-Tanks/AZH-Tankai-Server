@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AZH_Tankai_Server.Models.Bullets
 {
-    class BulletFactory
+    public class BulletFactory
     {
         public Bullet createBullet(string type, int x, int y)
         {

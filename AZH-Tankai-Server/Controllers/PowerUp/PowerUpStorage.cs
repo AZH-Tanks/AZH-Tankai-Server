@@ -1,6 +1,7 @@
 ﻿using AZH_Tankai_Server.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Timers;
 
@@ -19,7 +20,11 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
             _powerUpGenerator = new PowerUpGenerator();
         }
 
-        public static void StartGeneration()
+        public static void StartGeneration() {
+            StartGeneration((timeout) => new Timer(timeout));
+        }
+
+        public  static void StartGeneration(Func<int, Timer> timerFactory)
         {
             _generationInterval = 5000;
             Random rnd = new Random();
@@ -48,7 +53,7 @@ namespace AZH_Tankai_Server.Controllers.PowerUp
                     break;
             }
 
-            _generationTimer = new Timer(_generationInterval);
+            _generationTimer = timerFactory.Invoke(_generationInterval);
             _generationTimer.Elapsed += PowerUpGeneration__Elapsed;
             _generationTimer.Enabled = true;
         }

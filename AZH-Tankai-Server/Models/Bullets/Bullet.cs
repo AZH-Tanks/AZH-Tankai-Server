@@ -3,7 +3,7 @@ using AZH_Tankai_Shared;
 
 namespace AZH_Tankai_Server.Models.Bullets
 {
-    class Bullet
+    public class Bullet
     {
         public string Id { get; set; }
         public string Type { get; set; }
