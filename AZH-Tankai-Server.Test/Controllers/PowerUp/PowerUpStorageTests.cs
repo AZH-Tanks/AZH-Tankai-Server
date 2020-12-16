@@ -47,8 +47,8 @@ namespace AZH_Tankai_Server.Controllers.PowerUp.Tests
 
 
             Assert.True(proxyClientStub.MethodsUsed.Count >= 2);
-            Assert.That(proxyClientStub.MethodsUsed[0], Does.Match(".+Strategy"));
-            Assert.That(proxyClientStub.MethodsUsed[1], Does.Match("ReceivePowerUp"));
+            Assert.That(proxyClientStub.MethodsUsed[0], Does.Match($".+Strategy"));
+            Assert.That(proxyClientStub.MethodsUsed[1], Does.Match($"ReceivePowerUp"));
         }
 
     }

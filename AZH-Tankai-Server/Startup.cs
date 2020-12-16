@@ -35,7 +35,7 @@ namespace AZH_Tankai_Server
             app.UseRouting();
             app.UseEndpoints(routes =>
             {
-                routes.MapHub<ControlHub>("/ControlHub");
+                routes.MapHub<ControlHub>($"/ControlHub");
             });
             app.Run(async (context) =>
             {
