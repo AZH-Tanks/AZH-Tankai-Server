@@ -40,7 +40,7 @@ namespace AZH_Tankai_Server
             app.Run(async (context) =>
             {
                 MazeGenerator mazeGenerator = new MazeGenerator();
-                Maze maze = mazeGenerator.GenerateMaze();
+                Maze maze = mazeGenerator.GenerateMaze(5, 5);
                 await context.Response.WriteAsync(JsonSerializer.Serialize(maze.GetMazeDTO()));
             });
         }
