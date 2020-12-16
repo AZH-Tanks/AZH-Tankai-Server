@@ -8,13 +8,14 @@ namespace AZH_Tankai_Server.Controllers.Collision
 {
     public class CollisionComposite : CollisionComponent, IEnumerable
     {
-        public static int MAX_COLLISION_COMPONENTS = 1000;
+        public static readonly int MAX_COLLISION_COMPONENTS = 1000;
         private CollisionComponent[] children;
-        private int componentCount = 0;
+        public int componentCount { get; set; }
         private int capacity;
 
         public CollisionComposite()
         {
+            componentCount = 0;
             children = new CollisionComponent[10];
             capacity = 10;
         }
@@ -35,6 +36,10 @@ namespace AZH_Tankai_Server.Controllers.Collision
 
         public override CollisionComponent GetChild(int index)
         {
+            if (index >= componentCount)
+            {
+                throw new IndexOutOfRangeException();
+            }
             return children[index];
         }
         IEnumerator IEnumerable.GetEnumerator()
