@@ -1,4 +1,5 @@
 ﻿using AZH_Tankai_Server.Controllers;
+using AZH_Tankai_Server.Controllers.Maze;
 using AZH_Tankai_Shared;
 using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
@@ -9,11 +10,11 @@ namespace AZH_Tankai_Server.Hubs
 {
     public partial class ControlHub : Hub
     {
-        private readonly MazeGenerator mazeGenerator = new MazeGenerator();
+        private readonly MazeStorage mazeStorage = MazeStorage.Get();
 
         public Task CreateMaze()
         {
-            List<List<MazeCellDTO>> mazeDTO = mazeGenerator.GenerateMaze().GetMazeDTO();
+            List<List<MazeCellDTO>> mazeDTO = mazeStorage.GetMaze().GetMazeDTO();
             return Clients.All.SendAsync("ReceiveMaze", JsonSerializer.Serialize(mazeDTO));
         }
     }

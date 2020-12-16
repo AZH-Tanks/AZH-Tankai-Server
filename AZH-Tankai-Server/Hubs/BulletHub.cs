@@ -14,7 +14,7 @@ namespace AZH_Tankai_Server.Hubs
         public Task SendFireBullet(string user, string type, int x, int y)
         {
             Bullet bullet = new BulletFactory().createBullet(type, x, y);
-            BulletStorage.Get().Add(bullet);
+            BulletStorage.Get().Add(user, bullet);
             return Task.CompletedTask;
         }
     }

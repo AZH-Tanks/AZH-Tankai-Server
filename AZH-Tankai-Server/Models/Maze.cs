@@ -1,9 +1,10 @@
-﻿using AZH_Tankai_Shared;
+﻿using AZH_Tankai_Server.Controllers.Collision;
+using AZH_Tankai_Shared;
 using System.Collections.Generic;
 
 namespace AZH_Tankai_Server.Models
 {
-    public class Maze
+    public class Maze : CollisionComponent
     {
         public List<List<Tile>> Tiles { get; set; }
         public List<List<Wall>> Walls { get; set; }
@@ -61,6 +62,31 @@ namespace AZH_Tankai_Server.Models
         public void RemovePowerUp(PowerUp powerUp)
         {
             PowerUps.Remove(powerUp);
+        }
+
+        public override bool CheckCollisions(CollisionObject collisionObject)
+        {
+            int i = (int)(collisionObject.Y) / 40;
+            int j = (int)(collisionObject.X) / 40;
+            double cellPositionX = (collisionObject.X) % 40;
+            double cellPositionY = (collisionObject.Y) % 40;
+            if (cellPositionX < collisionObject.Radius && Walls[i][j].State.HasFlag(TileWallsState.Left))
+            {
+                return false;
+            }
+            if (40 - cellPositionX < collisionObject.Radius && Walls[i][j].State.HasFlag(TileWallsState.Right))
+            {
+                return false;
+            }
+            if (cellPositionY < collisionObject.Radius && Walls[i][j].State.HasFlag(TileWallsState.Top))
+            {
+                return false;
+            }
+            if (40 - cellPositionY < collisionObject.Radius && Walls[i][j].State.HasFlag(TileWallsState.Bottom))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

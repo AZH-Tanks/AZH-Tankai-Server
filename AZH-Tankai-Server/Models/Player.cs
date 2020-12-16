@@ -5,11 +5,13 @@ namespace AZH_Tankai_Server.Models
 {
     public class Player
     {
+        public Tank Tank { get; set; }
 
         public Player(string name, string connectionId)
         {
             Name = name;
             ConnectionId = connectionId;
+            Tank = new Tank(20, 20);
         }
 
         private List<ISendContent> _commands = new List<ISendContent>();
@@ -21,7 +23,7 @@ namespace AZH_Tankai_Server.Models
         public void Undo(ISendContent command, string user)
         {
             _commands.Remove(command);
-          
+
             command.Undo(user);
         }
 

@@ -8,16 +8,47 @@ namespace AZH_Tankai_Server.Controllers.Collision
 {
     public class CollisionComponentEnumerator : IEnumerator
     {
-        public object Current => throw new NotImplementedException();
+        public CollisionComponent[] collisionComponents;
+
+        int position = -1;
+
+        public CollisionComponentEnumerator(CollisionComponent[] collisionComponents)
+        {
+            this.collisionComponents = collisionComponents;
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public CollisionComponent Current
+        {
+            get
+            {
+                try
+                {
+                    return collisionComponents[position];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
 
         public bool MoveNext()
         {
-            throw new NotImplementedException();
+            position++;
+            return (position < collisionComponents.Length);
         }
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            position = -1;
         }
     }
 }

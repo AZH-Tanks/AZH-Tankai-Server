@@ -13,10 +13,11 @@ namespace AZH_Tankai_Server.Models.Bullets
     {
         private IHubContext<ControlHub> hubContext;
         static object thisLock = new object();
+        readonly Dictionary<string, Bullet> bullets;
 
         private BulletStorage()
         {
-            bullets = new List<Bullet>();
+            bullets = new Dictionary<string, Bullet>();
         }
 
         public void Start(IHubContext<ControlHub> context)
@@ -32,8 +33,11 @@ namespace AZH_Tankai_Server.Models.Bullets
             {
                 return;
             }
-            hubContext.Clients.All.SendAsync("ReceiveBulletCoordinates", JsonSerializer.Serialize(bullets.Select(bullet => bullet.GetBulletDTO()))).GetAwaiter().GetResult();
-            bullets.ForEach(bullet => bullet.Location = new Point(bullet.Location.X + bullet.Velocity, bullet.Location.Y));
+            hubContext.Clients.All.SendAsync("ReceiveBulletCoordinates", JsonSerializer.Serialize(bullets.Select(entry => entry.Value.GetBulletDTO()))).GetAwaiter().GetResult();
+            foreach (KeyValuePair<string, Bullet> entry in bullets)
+            {
+                entry.Value.Location = new Point(entry.Value.Location.X + entry.Value.Velocity, entry.Value.Location.Y);
+            }
         }
 
         private static BulletStorage singleton;
@@ -49,11 +53,9 @@ namespace AZH_Tankai_Server.Models.Bullets
             }
         }
 
-        readonly List<Bullet> bullets;
-
-        public void Add(Bullet bullet)
+        public void Add(string tankId, Bullet bullet)
         {
-            bullets.Add(bullet);
+            bullets[tankId] = bullet;
         }
     }
 }
