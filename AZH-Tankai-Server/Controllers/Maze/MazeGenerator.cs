@@ -21,5 +21,10 @@ namespace AZH_Tankai_Server.Controllers
             int height = rng.Next(15, 20);
             return mazeBuilder.SetDimensions(height, width).AddTiles().AddWalls(new WallGenerator(width, height)).Create();
         }
+
+        public Models.Maze GenerateMaze(int width, int height)
+        {
+            return mazeBuilder.SetDimensions(height, width).AddTiles().AddWalls(new WallGenerator(width, height)).Create();
+        }
     }
 }
