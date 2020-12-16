@@ -36,7 +36,11 @@ namespace AZH_Tankai_Server.Models
                     break;
                 }
             }
-            contents.RemoveAt(index);
+            if (index >= 0)
+            { 
+                contents.RemoveAt(index);
+            }
+           
         }
 
     }

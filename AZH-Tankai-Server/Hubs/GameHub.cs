@@ -3,12 +3,14 @@ using AZH_Tankai_Server.Models;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AZH_Tankai_Server.Hubs
 {
     public partial class ControlHub : Hub
     {
+
         readonly GameStorage gameRooms = GameStorage.Get();
         readonly PlayerStorage players = PlayerStorage.Get();
         public Task SendRoom(string user, string id, string json)
@@ -43,6 +45,35 @@ namespace AZH_Tankai_Server.Hubs
         {
             return Clients.Caller.SendAsync(gameRooms.GetByCredentials(password, connectionCode)?.Mode.InitiateMode(), gameRooms.GetByCredentials(password, connectionCode)?.JoinLink);
         }
+        static ImageOriginator originator = new ImageOriginator();
+        static Caretaker caretaker = new Caretaker();
+        public Task SendImage(string user, string roomId, string text)
+        {
+            GameRoom gameRoom = gameRooms.GetByConnectionCode(roomId);
+            ImageProxy imgProxy = new ImageProxy(text);
+
+
+            originator.Source = imgProxy.getImage();
+            caretaker.Memento = originator.SaveMemento();     
+            Clients.All.SendAsync("ReceiveImage", gameRoom.JoinLink, originator.Source);
+
+            Thread.Sleep(3000);
+
+            originator.Source = imgProxy.getImage();
+            caretaker.Memento = originator.SaveMemento();
+            Clients.All.SendAsync("ReceiveImage", gameRoom.JoinLink, originator.Source);
+
+            return Task.CompletedTask;
+        }
+
+        public Task UndoImage(string user, string roomId)
+        {
+            GameRoom gameRoom = gameRooms.GetByConnectionCode(roomId);
+            originator.RestoreMemento(caretaker.Memento);
+            return Clients.All.SendAsync("ReceiveImage", gameRoom.JoinLink, originator.Source);
+        }
+
+
 
         public Task SendTextMessage(string user, string roomId, string text)
         {
